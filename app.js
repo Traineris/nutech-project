@@ -5,6 +5,7 @@ const app = express();
 const db = require("./config/db");
 const path = require("path");
 const authMiddleware = require("./config/auth");
+const serverless = require('serverless-http');
 
 app.use(cors());
 app.use(express.json());
@@ -29,16 +30,20 @@ app.use("/balance", authMiddleware, balanceRouter);
 app.use("/topup", authMiddleware, topUpRouter);
 app.use("/transaction", authMiddleware, transaksiRouter);
 
-const PORT = process.env.PORT;
 
-app.listen(PORT, async () => {
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//   console.log(`Server running  on ${PORT}`);
+// });
+
+(async () => {
   try {
     await db.query("SELECT 1");
-    console.log("Database connected");
+    console.log("✅ Database connected");
   } catch (err) {
-    console.error("Database connection failed:", err.message);
-    process.exit(1);
+    console.error("❌ Database connection failed:", err.message);
   }
+})();
 
-  console.log(`Server running on port ${PORT}`);
-});
+module.exports = app;
+module.exports.handler = serverless(app);
