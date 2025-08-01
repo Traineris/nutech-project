@@ -25,7 +25,7 @@ const transaksiRouter = require("./routes/transaksiRouter");
 app.use("/upload", express.static(path.join(__dirname, "../upload")));
 
 app.use("/login", loginRouter);
-app.use("/registrasi", registerRouter);
+app.use("/registration", registerRouter);
 app.use("/profile", authMiddleware, profileRouter);
 app.use("/banner", bannerRouter);
 app.use("/services", authMiddleware, servicesRouter);
