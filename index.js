@@ -5,6 +5,8 @@ const path = require("path");
 const authMiddleware = require("./config/auth");
 const db = require("./config/db");
 
+require('./config/initDB');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
